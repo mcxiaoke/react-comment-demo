@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CommentInput from "./CommentInput";
 import CommentList from "./CommentList";
+import useStorage from "./useStorage";
 
 const CommentApp = () => {
-  const [comments, setComments] = useState([]);
-  const loadComments = () => {
-    const json = localStorage.getItem("comments");
-    json && setComments(JSON.parse(json));
-  };
-  const saveComments = newComments => {
-    localStorage.setItem("comments", JSON.stringify(newComments));
-  };
-  useEffect(() => {
-    loadComments();
-  }, []);
+  const [comments, setComments] = useStorage("comments", []);
   const handleSubmit = comment => {
     if (!comment.username || !comment.content) {
       return;
@@ -21,7 +12,6 @@ const CommentApp = () => {
     console.log("handleSubmit", comment);
     const newComments = [comment, ...comments];
     setComments(newComments);
-    saveComments(newComments);
   };
   const handleDeleteComment = comment => {
     console.log("handleDeleteComment", comment);
@@ -33,7 +23,6 @@ const CommentApp = () => {
         )
     );
     setComments(newComments);
-    saveComments(newComments);
   };
   return (
     <div className="wrapper">

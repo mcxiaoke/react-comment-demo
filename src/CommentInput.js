@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
+import useStorage from "./useStorage";
 import PropTypes from "prop-types";
 
 const CommentInput = ({ handleSubmit }) => {
   const textRef = useRef(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useStorage("username");
   const [content, setContent] = useState("");
   useEffect(() => {
-    setUsername(localStorage.getItem("username") || "");
     textRef.current.focus();
   }, []);
-  const onUsernameBlur = e => {
-    localStorage.setItem("username", e.target.value);
-  };
   const onUsernameChange = e => {
     setUsername(e.target.value);
   };
@@ -34,12 +31,7 @@ const CommentInput = ({ handleSubmit }) => {
       <div className="comment-field">
         <span className="comment-field-name">用户名：</span>
         <div className="comment-field-input">
-          <input
-            onBlur={onUsernameBlur}
-            name="username"
-            value={username}
-            onChange={onUsernameChange}
-          />
+          <input name="username" value={username} onChange={onUsernameChange} />
         </div>
       </div>
       <div className="comment-field">

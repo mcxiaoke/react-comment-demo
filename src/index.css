@@ -23,7 +23,7 @@ body {
   }
   
   .comment-field {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     display: flex;
   }
   
@@ -86,8 +86,8 @@ body {
     display: flex;
     border-bottom: 1px solid #f1f1f1;
     margin-bottom: 10px;
-    padding-bottom: 10px;
-    min-height: 50px;
+    /* padding-bottom: 10px; */
+    min-height: 40px;
   }
   
   .comment .comment-user {
