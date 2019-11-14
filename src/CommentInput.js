@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 
 const CommentInput = ({ handleSubmit }) => {
   const textRef = useRef(null);
@@ -57,6 +58,10 @@ const CommentInput = ({ handleSubmit }) => {
       </div>
     </div>
   );
+};
+
+CommentInput.propTypes = {
+  handleSubmit: PropTypes.func.isRequired
 };
 
 export default CommentInput;

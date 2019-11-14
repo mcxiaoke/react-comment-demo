@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 const formatTime = createdAt => {
   const duration = (+Date.now() - (createdAt || 1573652000000)) / 1000;
@@ -38,7 +39,7 @@ const Comment = ({ comment, onDelete }) => {
   return (
     <div className="comment">
       <div className="comment-user">
-        <span className='comment-username'>{comment.username} </span>：
+        <span className="comment-username">{comment.username} </span>：
       </div>
       <p
         dangerouslySetInnerHTML={{
@@ -51,6 +52,11 @@ const Comment = ({ comment, onDelete }) => {
       </span>
     </div>
   );
+};
+
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired,
+  onDelete: PropTypes.func
 };
 
 export default Comment;

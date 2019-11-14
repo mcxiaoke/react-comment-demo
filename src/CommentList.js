@@ -1,5 +1,6 @@
 import React from "react";
 import Comment from "./Comment";
+import PropTypes from "prop-types";
 
 const CommentList = ({ comments, onDeleteComment }) => {
   const handleDelete = comment => {
@@ -18,6 +19,11 @@ const CommentList = ({ comments, onDeleteComment }) => {
       })}
     </div>
   );
+};
+
+CommentList.propTypes = {
+  comments: PropTypes.array,
+  onDeleteComment: PropTypes.func
 };
 
 export default CommentList;
