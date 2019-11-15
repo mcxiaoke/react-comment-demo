@@ -11,19 +11,23 @@ const useStorage = (key, initValue) => {
     }
   };
 
-  useEffect(() => {
-    const loadData = () => {
-      const json = localStorage.getItem(key);
-      try {
-        setData(JSON.parse(json) || initValue);
-      } catch (e) {
-        setData(json || initValue);
-      }
-      console.log("loadData", data);
-    };
-    loadData();
+  useEffect(
+    callback => {
+      const loadData = () => {
+        const json = localStorage.getItem(key);
+        try {
+          setData(JSON.parse(json) || initValue);
+        } catch (e) {
+          setData(json || initValue);
+        }
+        callback(data);
+        console.log("loadData", data);
+      };
+      loadData();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+    [key]
+  );
 
   return [data, saveData];
 };

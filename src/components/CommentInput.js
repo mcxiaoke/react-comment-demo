@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import useStorage from "./useStorage";
 import PropTypes from "prop-types";
 
-const CommentInput = ({ handleSubmit }) => {
+const CommentInput = props => {
   const textRef = useRef(null);
-  const [username, setUsername] = useStorage("username");
+  const [username, setUsername] = useState(props.username);
   const [content, setContent] = useState("");
   useEffect(() => {
     textRef.current.focus();
@@ -16,14 +15,24 @@ const CommentInput = ({ handleSubmit }) => {
     setContent(e.target.value);
   };
   const onSubmit = e => {
-    if (handleSubmit) {
+    if (props.onSubmit) {
       setContent("");
       const newComment = {
         username,
         content,
         createdAt: +new Date()
       };
-      handleSubmit(newComment);
+      props.onSubmit(newComment);
+    }
+  };
+  const onUsernameBlur = e => {
+    props.onUsernameBlur && props.onUsernameBlur(username);
+  };
+  const onKeyPress = e => {
+    console.log("onKeyPress", e.key, e.metaKey);
+    if (e.keyCode === 13 && e.metaKey) {
+      // cmd+enter submit
+      onSubmit(e);
     }
   };
   return (
@@ -31,7 +40,12 @@ const CommentInput = ({ handleSubmit }) => {
       <div className="comment-field">
         <span className="comment-field-name">用户名：</span>
         <div className="comment-field-input">
-          <input name="username" value={username} onChange={onUsernameChange} />
+          <input
+            name="username"
+            value={username}
+            onBlur={onUsernameBlur}
+            onChange={onUsernameChange}
+          />
         </div>
       </div>
       <div className="comment-field">
@@ -42,6 +56,7 @@ const CommentInput = ({ handleSubmit }) => {
             name="content"
             value={content}
             onChange={onContentChange}
+            onKeyDown={onKeyPress}
           />
         </div>
       </div>
@@ -53,7 +68,9 @@ const CommentInput = ({ handleSubmit }) => {
 };
 
 CommentInput.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  username: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  onUsernameBlur: PropTypes.func.isRequired
 };
 
 export default CommentInput;
